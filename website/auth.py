@@ -17,7 +17,7 @@ def signup():
         # create user and check if there is another user with the same nickname
         user = User.query.filter_by(username=usrn).first()
         if user:
-            flash('user with than nickname already exists', category='error')
+            flash('User with than nickname already exists', category='error')
 
         # check if passwords match, if not flash message
         elif psw1 != psw2:
@@ -25,15 +25,15 @@ def signup():
         elif len(psw1) < 4:
             flash('Password must be at least 4 characters', category='error')
         elif len(usrn) < 2:
-            flash('username must be more than 2 characters', category='error')
+            flash('Nickname must be more longer than 2 characters', category='error')
         # otherwise add user to the database
         else:
             # store password with a hash for security reasons
             new_user = User(username=usrn, password=generate_password_hash(psw1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            flash('signed up successfully!', category='success')
-            return render_template("chat.html")
+            flash('Signed up successfully!', category='success')
+            return redirect(url_for('views.chat'))
     return render_template("signup.html")
 
 
@@ -47,14 +47,14 @@ def login():
         if user:
             # check if the password matches with that users saved password in the database
             if check_password_hash(user.password, psw):
-                flash('logged in successfully', category='success')
-                return render_template("chat.html")
+                flash('Logged in successfully!', category='success')
+                return redirect(url_for('views.chat'))
             # if it doesn't ask to enter  password again
             else:
                 flash('Incorrect password, try again', category='error')
         # if user doesn't exist with than nickname ask user to signup first
         else:
-            flash('user does not exist. Please sign up', category='error')
+            flash('User does not exist. Please sign up first', category='error')
     return render_template("login.html")
 
 
