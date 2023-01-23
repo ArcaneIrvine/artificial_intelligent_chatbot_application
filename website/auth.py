@@ -14,8 +14,13 @@ def signup():
         psw1 = request.form["password1"]
         psw2 = request.form["password2"]
 
+        # create user and check if there is another user with the same nickname
+        user = User.query.filter_by(username=usrn).first()
+        if user:
+            flash('user with than nickname already exists', category='error')
+
         # check if passwords match, if not flash message
-        if psw1 != psw2:
+        elif psw1 != psw2:
             flash('Passwords do not match', category='error')
         elif len(psw1) < 4:
             flash('Password must be at least 4 characters', category='error')
@@ -37,6 +42,22 @@ def login():
     if request.method == "POST":
         usrn = request.form["username"]
         psw = request.form["password"]
-        return render_template("chat.html")
-    else:
-        return render_template("login.html")
+        # check if user exists in the database
+        user = User.query.filter_by(username=usrn).first()
+        if user:
+            # check if the password matches with that users saved password in the database
+            if check_password_hash(user.password, psw):
+                flash('logged in successfully', category='success')
+                return render_template("chat.html")
+            # if it doesn't ask to enter  password again
+            else:
+                flash('Incorrect password, try again', category='error')
+        # if user doesn't exist with than nickname ask user to signup first
+        else:
+            flash('user does not exist. Please sign up', category='error')
+    return render_template("login.html")
+
+
+@auth.route("/logout", methods=["POST", "GET"])
+def logout():
+    return render_template("logout.html")
