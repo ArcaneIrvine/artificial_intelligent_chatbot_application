@@ -8,6 +8,8 @@ import random
 from tensorflow.python.framework import ops
 from nltk.stem.lancaster import LancasterStemmer
 stemmer = LancasterStemmer()
+# needed on windows to run
+nltk.download('punkt')
 
 # import bot data file
 with open("data/data.yml", "r") as file:
