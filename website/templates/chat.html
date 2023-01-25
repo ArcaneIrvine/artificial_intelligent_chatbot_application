@@ -5,12 +5,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
       body {
-        font-family: monospace;
+        font-family: 'Open Sans', sans-serif;
       }
       h1 {
+          color:#525252;
         background-color: #FFC9BE;
         display: inline-block;
-        font-size: 3em;
+        font-size: 2em;
         margin: 0;
         padding: 14px;
       }
@@ -72,7 +73,7 @@
       .boxed {
         margin-left: auto;
         margin-right: auto;
-        width: 78%;
+        width: 40%;
         margin-top: 60px;
         border: 1px solid green;
       }
@@ -85,43 +86,48 @@
 <body>
 
 <center>
-   <h1>title</h1>
+   <h1>AI Chat Box</h1>
 </center>
-    <div class="box"></div>
-        <div class="boxed">
-            <div>
-                <div id="chatbox">
-                    <p class="botText">
-                        <span>initial bot msg</span>
-                    </p>
-                </div>
-        <div id="userInput">
-            <input id="textInput" type="text" name="msg" placeholder="Message" />
+
+        <div class="box"></div>
+            <div class="boxed">
+                <div>
+                    <div id="chatbox">
+                        <p class="botText">
+                            <span>i have..consiousness</span>
+                        </p>
+                    </div>
+            <div id="userInput">
+                <form action="/chat" method="POST">
+                    <input id="textInput" type="text" name="msg" placeholder="type here">
+                </form>
+            </div>
         </div>
-    </div>
-    </div>
+        </div>
+
     <script>
-            function getBotResponse() {
-              var rawText = $("#textInput").val();
-              var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
-              $("#textInput").val("");
-              $("#chatbox").append(userHtml);
+        function getBotResponse() {
+
+            var rawText = $("#textInput").val();
+            var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+            $("#textInput").val("");
+            $("#chatbox").append(userHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+            $.get("/chat", { msg: rawText }).done(function(data) {
+              var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+              $("#chatbox").append(botHtml);
               document
                 .getElementById("userInput")
                 .scrollIntoView({ block: "start", behavior: "smooth" });
-              $.get("/get", { msg: rawText }).done(function(data) {
-                var botHtml = '<p class="botText"><span>' + data + "</span></p>";
-                $("#chatbox").append(botHtml);
-                document
-                  .getElementById("userInput")
-                  .scrollIntoView({ block: "start", behavior: "smooth" });
-              });
-            }
-            $("#textInput").keypress(function(e) {
-              if (e.which == 13) {
-                getBotResponse();
-              }
             });
-        </script>
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 import nltk
+import os
 import numpy as np
 import yaml
 import tflearn
@@ -12,12 +13,12 @@ stemmer = LancasterStemmer()
 nltk.download('punkt')
 
 # import bot data file
-with open("data/data.yml", "r") as file:
+with open(os.path.dirname(os.path.abspath(__file__)) + "/data/data.yml", "r") as file:
     data = yaml.safe_load(file)
 
 try:
     # save these variables in pickle file and load them if opening the file works fine
-    with open("data/data.pickle", "rb") as f:
+    with open(os.path.dirname(os.path.abspath(__file__)) + "/data/data.pickle", "rb") as f:
         words, labels, training, output = pickle.load(f)
 except:
     words = []
@@ -75,7 +76,7 @@ except:
     training = np.array(training)
     output = np.array(output)
 
-    with open("data/data.pickle", "wb") as f:
+    with open(os.path.dirname(os.path.abspath(__file__)) + "data/data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output), f)
 
 # Neuron Network
@@ -91,11 +92,11 @@ net = tflearn.regression(net)
 model = tflearn.DNN(net)
 
 # fit and train the model
-try:
-    model.load("model/model.tflearn")
-except:
-    model.fit(training, output, n_epoch=2000, batch_size=8, show_metric=True)
-    model.save("model/model.tflearn")
+model.load(os.path.dirname(os.path.abspath(__file__)) + "\model\model.tflearn")
+
+# if you change or add additional data for training run the following:
+# model.fit(training, output, n_epoch=2000, batch_size=8, show_metric=True)
+# model.save(os.getcwd() + "model/model.tflearn")
 
 
 def bag_of_words(s, words):
@@ -111,30 +112,21 @@ def bag_of_words(s, words):
     return np.array(bag)
 
 
-def chat():
-    print("i..have..consciousness")
-    while True:
-        inp = input(">>>")
-        # if user inputs quit end the program
-        if inp.lower() == "quit":
-            break
-        # otherwise feed users input to the model
-        result = model.predict([bag_of_words(inp, words)])[0]
-        # pick the highest probability neuron
-        result_index = np.argmax(result)
-        tag = labels[result_index]
+def botchat(inp):
+    # feed users input to the model
+    result = model.predict([bag_of_words(inp, words)])[0]
+    # pick the highest probability neuron
+    result_index = np.argmax(result)
+    tag = labels[result_index]
 
-        # check if result probability is high enough for a good answer
-        if result[result_index] > 0.5:
-            # match it with the data tag and check if it is the same. Then pick a random answer from the responses
-            for tg in data['intents']:
-                if tg['categories'] == tag:
-                    response = tg['answers']
+    # check if result probability is high enough for a good answer
+    if result[result_index] > 0.5:
+        # match it with the data tag and check if it is the same. Then pick a random answer from the responses
+        for tg in data['intents']:
+            if tg['categories'] == tag:
+                response = tg['answers']
 
-            print(random.choice(response))
-        # if not ask user to repeat
-        else:
-            print("Sorry, i did not understand, please try again.")
-
-
-chat()
+        return random.choice(response)
+    # if not ask user to repeat
+    else:
+        return "Sorry, i did not understand, please try again."
