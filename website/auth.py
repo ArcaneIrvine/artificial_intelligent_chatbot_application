@@ -25,7 +25,7 @@ def signup():
         elif len(psw1) < 4:
             flash('Password must be at least 4 characters', category='error')
         elif len(usrn) < 2:
-            flash('Nickname must be more longer than 2 characters', category='error')
+            flash('Nickname must be longer than 2 characters', category='error')
         # otherwise add user to the database
         else:
             # store password with a hash for security reasons
