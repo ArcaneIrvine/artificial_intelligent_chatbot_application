@@ -84,7 +84,6 @@
 
 </head>
 <body>
-
 <center>
    <h1>AI Chat Box</h1>
 </center>
@@ -97,17 +96,13 @@
                             <span>i have..consiousness</span>
                         </p>
                     </div>
-            <div id="userInput">
-                <form action="/chat" method="POST">
-                    <input id="textInput" type="text" name="msg" placeholder="type here">
-                </form>
+             <div id="userInput">
+                    <input id="textInput" type="text" name="msg" placeholder="type here" />
             </div>
-        </div>
         </div>
 
     <script>
         function getBotResponse() {
-
             var rawText = $("#textInput").val();
             var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
             $("#textInput").val("");
@@ -115,7 +110,7 @@
             document
               .getElementById("userInput")
               .scrollIntoView({ block: "start", behavior: "smooth" });
-            $.get("/chat", { msg: rawText }).done(function(data) {
+            $.get("/get", { msg: rawText }).done(function(data) {
               var botHtml = '<p class="botText"><span>' + data + "</span></p>";
               $("#chatbox").append(botHtml);
               document
