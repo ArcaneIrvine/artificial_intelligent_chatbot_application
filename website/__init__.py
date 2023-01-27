@@ -25,7 +25,7 @@ def create_app():
     app.register_blueprint(auth, url_prefix='/')
 
     # create database
-    from .models import User, Note
+    from .models import User, History
     create_database(app)
 
     # create login manager

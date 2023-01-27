@@ -10,11 +10,11 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150))
     password = db.Column(db.String(150))
     # define a relationship to connect user with Note
-    notes = db.relationship('Note')
+    history = db.relationship('History')
 
 
 # model for storing note objects in database
-class Note(db.Model):
+class History(db.Model):
     # primary key for each object created
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(10000))
