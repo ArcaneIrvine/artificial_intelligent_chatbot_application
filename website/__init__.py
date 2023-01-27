@@ -12,7 +12,6 @@ DB_NAME = "database.db"
 # app create function
 def create_app():
     app = Flask(__name__)
-    server = app.server
 
     app.secret_key = os.urandom(12).hex()
     # store database
