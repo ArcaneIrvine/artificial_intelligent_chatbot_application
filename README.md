@@ -6,12 +6,12 @@ to install the required libraries for the app to run you can do: pip install -r 
 
 alternative you can do them one by one from the list below
 
-## Libraries needed:
--numpy
--nltk
--pyyaml
--tflearn
--tensorflow
--sqlalchemy
--flask_sqlalchemy
--flask_login
+### Libraries needed
+- numpy
+- nltk
+- pyyaml
+- tflearn
+- tensorflow
+- sqlalchemy
+- flask_sqlalchemy
+- flask_login
