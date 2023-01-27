@@ -2,6 +2,7 @@ from website import db
 from website.models import User
 from flask import Blueprint
 from flask import render_template, request, url_for, flash, redirect
+from flask_login import login_user, login_required, logout_user, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__)
@@ -32,7 +33,9 @@ def signup():
             new_user = User(username=usrn, password=generate_password_hash(psw1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            flash('Signed up successfully!', category='success')
+            # flash('Signed up successfully!', category='success')
+            # log in user module, remember user
+            login_user(new_user, remember=True)
             return redirect(url_for('views.chat'))
     return render_template("signup.html")
 
@@ -47,7 +50,9 @@ def login():
         if user:
             # check if the password matches with that users saved password in the database
             if check_password_hash(user.password, psw):
-                flash('Logged in successfully!', category='success')
+                # flash('Logged in successfully!', category='success')
+                # log in user module, remember user
+                login_user(user, remember=True)
                 return redirect(url_for('views.chat'))
             # if it doesn't ask to enter  password again
             else:
@@ -60,4 +65,6 @@ def login():
 
 @auth.route("/logout", methods=["POST", "GET"])
 def logout():
-    return render_template("logout.html")
+    # log out user
+    logout_user()
+    return redirect(url_for("auth.login"))
