@@ -92,52 +92,53 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-toggler-right">
-    <div class="navbar-nav">
-        <a class="nav-item nav-link" id="home" href="#">home</a>
-        <a class="nav-item nav-link" id="logout" href="/login">logout</a>
-    </div>
-</nav>
-<center>
-   <h1><b>AI Chat Box</b></h1>
-</center>
-
-        <div class="box"></div>
-            <div class="boxed">
-                <div>
-                    <div id="chatbox">
-                        <p class="botText">
-                            <span>i have..consiousness</span>
-                        </p>
-                    </div>
-             <div id="userInput">
-                    <input id="textInput" type="text" name="msg" placeholder="type here" />
-            </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-toggler-right">
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" id="home" href="#">home</a>
+            <a class="nav-item nav-link" id="logout" href="/login">logout</a>
         </div>
+    </nav>
+    <center>
+       <h1><b>AI Chat Box</b></h1>
+    </center>
 
-    <script>
-        function getBotResponse() {
-            var rawText = $("#textInput").val();
-            var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
-            $("#textInput").val("");
-            $("#chatbox").append(userHtml);
-            document
-              .getElementById("userInput")
-              .scrollIntoView({ block: "start", behavior: "smooth" });
-            $.get("/get", { msg: rawText }).done(function(data) {
-              var botHtml = '<p class="botText"><span>' + data + "</span></p>";
-              $("#chatbox").append(botHtml);
-              document
-                .getElementById("userInput")
-                .scrollIntoView({ block: "start", behavior: "smooth" });
+            <div class="box"></div>
+                <div class="boxed">
+                    <div>
+                        <div id="chatbox">
+                            <p class="botText">
+                                <span>i have..consiousness</span>
+                            </p>
+                        </div>
+                    <div id="userInput">
+                        <input id="textInput" type="text" name="msg" placeholder="type here" />
+                    </div>
+                </div>
+            </div>
+
+        <script>
+            function getBotResponse() {
+                var rawText = $("#textInput").val();
+                var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+                $("#textInput").val("");
+                $("#chatbox").append(userHtml);
+                document
+                  .getElementById("userInput")
+                  .scrollIntoView({ block: "start", behavior: "smooth" });
+                $.get("/get", { msg: rawText }).done(function(data) {
+                  var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+                  $("#chatbox").append(botHtml);
+                  document
+                    .getElementById("userInput")
+                    .scrollIntoView({ block: "start", behavior: "smooth" });
+                });
+            }
+            $("#textInput").keypress(function(e) {
+              if (e.which == 13) {
+                getBotResponse();
+              }
             });
-        }
-        $("#textInput").keypress(function(e) {
-          if (e.which == 13) {
-            getBotResponse();
-          }
-        });
-    </script>
+        </script>
 </body>
 
 </html>
