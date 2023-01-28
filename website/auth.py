@@ -18,7 +18,7 @@ def signup():
         # create user and check if there is another user with the same nickname
         user = User.query.filter_by(username=usrn).first()
         if user:
-            flash('User with than nickname already exists', category='error')
+            flash('User with that nickname already exists', category='error')
 
         # check if passwords match, if not flash message
         elif psw1 != psw2:
