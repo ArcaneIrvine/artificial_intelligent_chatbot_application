@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>403</title>
+    <title>
+        {% block title%}
+        403
+        {% endblock %}
+    </title>
 </head>
 <body>
-
+{% block body%}
+  <div id="absoluteCenteredDiv">
+        <div class="box">
+            <center><h1><b>403</b></h1></center>
+            <h1><b>Error - Forbidden</b></h1>
+            <button onclick= "location.href = '/signup';" class="button" type="submit">go back</button>
+        </div>
+  </div>
+{% endblock %}
 </body>
 </html>

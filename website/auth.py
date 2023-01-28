@@ -33,7 +33,7 @@ def signup():
             new_user = User(username=usrn, password=generate_password_hash(psw1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
-            # flash('Signed up successfully!', category='success')
+            flash('Signed up successfully!', category='success')
             # log in user module, remember user
             login_user(new_user, remember=True)
             return redirect(url_for('views.chat'))
@@ -50,7 +50,7 @@ def login():
         if user:
             # check if the password matches with that users saved password in the database
             if check_password_hash(user.password, psw):
-                # flash('Logged in successfully!', category='success')
+                flash('Logged in successfully!', category='success')
                 # log in user module, remember user
                 login_user(user, remember=True)
                 return redirect(url_for('views.chat'))
@@ -67,4 +67,5 @@ def login():
 def logout():
     # log out user
     logout_user()
+    flash('Logged out successfully!', category='success')
     return redirect(url_for("auth.login"))

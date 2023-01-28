@@ -1,10 +1,22 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>400</title>
+    <title>
+        {% block title%}
+        400
+        {% endblock %}
+    </title>
 </head>
 <body>
-
+{% block body%}
+  <div id="absoluteCenteredDiv">
+        <div class="box">
+            <center><h1><b>400</b></h1></center>
+            <h1><b>Error - Bad request</b></h1>
+            <button onclick= "location.href = '/signup';" class="button" type="submit">go back</button>
+        </div>
+  </div>
+{% endblock %}
 </body>
 </html>
