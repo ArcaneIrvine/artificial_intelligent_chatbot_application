@@ -22,8 +22,10 @@ def create_app():
     # register blueprints
     from .views import views
     from .auth import auth
+    from .errors_handler import errors_handler
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
+    app.register_blueprint(errors_handler)
 
     # create database
     from .models import User, History
