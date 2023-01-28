@@ -1,2 +1,2 @@
-model_checkpoint_path: "/home/stavros/Desktop/MyFiles/PyCharm_Projects/Buddy/model/model.tflearn"
-all_model_checkpoint_paths: "/home/stavros/Desktop/MyFiles/PyCharm_Projects/Buddy/model/model.tflearn"
+model_checkpoint_path: "D:\\Stauros\\Projects\\Pycharm projects\\my_ai_webapp\\website\\ai_chatbot\\model\\model.tflearn"
+all_model_checkpoint_paths: "D:\\Stauros\\Projects\\Pycharm projects\\my_ai_webapp\\website\\ai_chatbot\\model\\model.tflearn"

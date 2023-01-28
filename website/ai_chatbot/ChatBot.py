@@ -96,7 +96,7 @@ model.load(os.path.dirname(os.path.abspath(__file__)) + "\model\model.tflearn")
 
 # if you change or add additional data for training run the following:
 # model.fit(training, output, n_epoch=2000, batch_size=8, show_metric=True)
-# model.save(os.getcwd() + "model/model.tflearn")
+# model.save("model/model.tflearn")
 
 
 def bag_of_words(s, words):
