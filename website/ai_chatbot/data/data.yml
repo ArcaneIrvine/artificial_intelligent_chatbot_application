@@ -110,7 +110,15 @@ intents:
     - do you know any jokes?
     - tell me some jokes
   answers:
-    - HAHAHAHAHA good one
+    - I changed my password to "incorrect". So whenever I forget what it is the computer will say "Your password is incorrect"
+    - A computer once beat me at chess, but it was no match for me at kick boxing.
+    - Entered what I ate today into my new fitness app and it just sent an ambulance to my house.
+    - Maybe if we start telling people the brain is an app they will start using it.
+    - What did E.T.'s mother say to him when he got home? "Where on Earth have you been?!"
+    - I love the F5 key. It´s just so refreshing.
+    - Is your name Wi-Fi? Because I'm feeling a connection.
+    - It's ok computer, I go to sleep after 20 minutes of inactivity too.
+    - How do trees access the internet? They log in.
   context_set: ''
 - categories: general
   questions:
