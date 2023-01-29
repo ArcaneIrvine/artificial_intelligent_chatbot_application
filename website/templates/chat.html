@@ -99,6 +99,8 @@
         border: 4px solid #556cc9;
       }
     </style>
+    {% block additional_style %}
+    {% endblock %}
 </head>
     {% with messages = get_flashed_messages(with_categories=true) %} {% if
     messages %} {% for category, message in messages %} {% if category ==
@@ -118,10 +120,12 @@
     </div>
     {% endif %} {% endfor %} {% endif %} {% endwith %}
 <body>
-
+{% block body %}
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark navbar-toggler-right">
         <div class="navbar-nav">
             <a class="nav-item nav-link" id="logout" href="/logout">logout</a>
+            <a class="nav-item nav-link" id="chat" href="/chat">chat</a>
+            <a class="nav-item nav-link" id="profile" href="/profile">profile</a>
         </div>
     </nav>
     <center>
@@ -165,6 +169,7 @@
               }
             });
         </script>
+{% endblock %}
 </body>
 
 </html>

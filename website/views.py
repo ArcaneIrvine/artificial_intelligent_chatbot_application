@@ -28,3 +28,10 @@ def get():
 
     # return bot reply to chat page
     return bot_reply
+
+
+@views.route("/profile", methods=["POST", "GET"])
+@login_required
+def profile():
+    return render_template('profile.html')
+
