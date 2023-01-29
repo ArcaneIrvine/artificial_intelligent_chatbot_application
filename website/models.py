@@ -20,5 +20,12 @@ class History(db.Model):
     data = db.Column(db.String(10000))
     # automatically add the date using func.now() function
     date = db.Column(db.DateTime(timezone=True), default=func.now())
-    # for each not store the id of the user who created it using a foreign key relation
+    # for each message store the id of the user who typed it using a foreign key relation
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+
+# model for storing questions bot can not answer
+class Bot(db.Model):
+    # primary key for each object created
+    id = db.Column(db.Integer, primary_key=True)
+    question = db.Column(db.String(10000))

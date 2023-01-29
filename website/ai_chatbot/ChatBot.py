@@ -95,7 +95,7 @@ model = tflearn.DNN(net)
 model.load(os.path.dirname(os.path.abspath(__file__)) + "\model\model.tflearn")
 
 # if you change or add additional data for training run the following:
-# model.fit(training, output, n_epoch=2000, batch_size=8, show_metric=True)
+# model.fit(training, output, n_epoch=1000, batch_size=8, show_metric=True)
 # model.save("model/model.tflearn")
 
 
@@ -120,7 +120,7 @@ def botchat(inp):
     tag = labels[result_index]
 
     # check if result probability is high enough for a good answer
-    if result[result_index] > 0.5:
+    if result[result_index] > 0.6:
         # match it with the data tag and check if it is the same. Then pick a random answer from the responses
         for tg in data['intents']:
             if tg['categories'] == tag:
@@ -130,3 +130,12 @@ def botchat(inp):
     # if not ask user to repeat
     else:
         return "Sorry, i did not understand, please try again."
+
+
+# test bot's replies
+"""
+inp = input(">>>")
+while inp != 'quit':
+    print(botchat(inp))
+    inp = input(">>>")
+"""
