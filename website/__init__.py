@@ -3,10 +3,14 @@ from os import path
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_mail import Mail, Message
 
 # define new database
 db = SQLAlchemy()
 DB_NAME = "database.db"
+
+# define mail
+mail = Mail()
 
 
 # app create function
@@ -18,6 +22,17 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     # initialize database
     db.init_app(app)
+
+    app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+    app.config['MAIL_PORT'] = 465
+    # on a production environment store credentials on environment variables for safety reasons
+    app.config['MAIL_USERNAME'] = 'arcaneirvinetest@gmail.com'
+    app.config['MAIL_PASSWORD'] = 'lpajewxwifnhclex'
+    app.config['MAIL_USE_TLS'] = False
+    app.config['MAIL_USE_SSL'] = True
+
+    # initialize mail
+    mail.init_app(app)
 
     # register blueprints
     from .views import views

@@ -1,8 +1,10 @@
-from website import db
+from random import randint
+from website import db, mail
 from website.models import User
 from flask import Blueprint
 from flask import render_template, request, url_for, flash, redirect
 from flask_login import login_user, login_required, logout_user, current_user
+from flask_mail import Message
 from werkzeug.security import generate_password_hash, check_password_hash
 
 auth = Blueprint('auth', __name__)
@@ -11,26 +13,36 @@ auth = Blueprint('auth', __name__)
 @auth.route("/signup", methods=["POST", "GET"])
 def signup():
     if request.method == "POST":
+        email = request.form["email"]
         usrn = request.form["username"]
         psw1 = request.form["password1"]
         psw2 = request.form["password2"]
 
-        # create user and check if there is another user with the same nickname
-        user = User.query.filter_by(username=usrn).first()
+        # create user and check if there is another user with the same email
+        user = User.query.filter_by(email=email).first()
         if user:
-            flash('User with that nickname already exists', category='error')
+            flash('User with that email already exists', category='error')
 
-        # check if passwords match, if not flash message
+        elif len(email) < 6:
+            flash('Email must be at least 6 characters', category='error')
+        # check if passwords match
         elif psw1 != psw2:
             flash('Passwords do not match', category='error')
-        elif len(psw1) < 4:
-            flash('Password must be at least 4 characters', category='error')
+        elif len(psw1) < 6:
+            flash('Password must be at least 6 characters', category='error')
         elif len(usrn) < 2:
             flash('Nickname must be longer than 2 characters', category='error')
         # otherwise add user to the database
         else:
+            # generate otp and send to users email
+            otp = randint(000000, 999999)
+            print(otp)
+            msg = Message('OTP', sender='arcaneirvinetest@gmail.com', recipients=[str(email)])
+            msg.body = str(otp)
+            mail.send(msg)
+
             # store password with a hash for security reasons
-            new_user = User(username=usrn, password=generate_password_hash(psw1, method='sha256'))
+            new_user = User(email=email, username=usrn, password=generate_password_hash(psw1, method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             flash('Signed up successfully!', category='success')
@@ -43,10 +55,10 @@ def signup():
 @auth.route("/login", methods=["POST", "GET"])
 def login():
     if request.method == "POST":
-        usrn = request.form["username"]
+        email = request.form["email"]
         psw = request.form["password"]
         # check if user exists in the database
-        user = User.query.filter_by(username=usrn).first()
+        user = User.query.filter_by(email=email).first()
         if user:
             # check if the password matches with that users saved password in the database
             if check_password_hash(user.password, psw):

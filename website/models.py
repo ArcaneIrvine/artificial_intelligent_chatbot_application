@@ -7,6 +7,7 @@ from sqlalchemy.sql import func
 class User(db.Model, UserMixin):
     # primary key for each object created
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150))
     username = db.Column(db.String(150))
     password = db.Column(db.String(150))
     # define a relationship to connect user with Note
