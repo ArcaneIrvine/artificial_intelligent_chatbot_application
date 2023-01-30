@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <title>
+        {% block title%}
+        Verify
+        {% endblock %}
+    </title>
+</head>
+<body>
+{% block body%}
+  <div id="absoluteCenteredDiv">
+    <form action="/verify" method="POST">
+        <div class="box">
+            <h1><b>A code has been sent to your email. Please verify</b></h1>
+            <input class="username" type="text" name="otp" placeholder="enter code">
+            <button class="button" type="submit">verify</button>
+        </div>
+    </form>
+      <p>Have not received code? <a class="fpwd" href="/signup">send again</a></p>
+  </div>
+{% endblock %}
+</body>
+</html>

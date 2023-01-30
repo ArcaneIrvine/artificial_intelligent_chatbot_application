@@ -2,7 +2,7 @@ from random import randint
 from website import db, mail
 from website.models import User
 from flask import Blueprint
-from flask import render_template, request, url_for, flash, redirect
+from flask import render_template, request, url_for, flash, redirect, session
 from flask_login import login_user, login_required, logout_user, current_user
 from flask_mail import Message
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -36,20 +36,34 @@ def signup():
         else:
             # generate otp and send to users email
             otp = randint(000000, 999999)
-            print(otp)
+            session['otp_'] = otp
+            session['email_'] = email
+            session['usrn_'] = usrn
+            session['psw_'] = psw1
             msg = Message('OTP', sender='arcaneirvinetest@gmail.com', recipients=[str(email)])
             msg.body = str(otp)
             mail.send(msg)
+            return redirect(url_for('auth.verify'))
+    return render_template("signup.html")
 
-            # store password with a hash for security reasons
-            new_user = User(email=email, username=usrn, password=generate_password_hash(psw1, method='sha256'))
+
+@auth.route("/verify", methods=["POST", "GET"])
+def verify():
+    if request.method == 'POST':
+        user_otp = request.form['otp']
+        if int(user_otp) == session.get('otp_', None):
+            # create new user, store password with a hash for security reasons
+            new_user = User(email=session.get('email_', None), username=session.get('usrn_', None), password=generate_password_hash(session.get('psw_', None), method='sha256'))
             db.session.add(new_user)
             db.session.commit()
             flash('Signed up successfully!', category='success')
             # log in user module, remember user
             login_user(new_user, remember=True)
             return redirect(url_for('views.chat'))
-    return render_template("signup.html")
+        else:
+            flash('the code you entered was not right', category='error')
+
+    return render_template('verify.html')
 
 
 @auth.route("/login", methods=["POST", "GET"])
