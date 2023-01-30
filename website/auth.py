@@ -36,6 +36,7 @@ def signup():
         else:
             # generate otp and send to users email
             otp = randint(000000, 999999)
+            # create sessions to save users information
             session['otp_'] = otp
             session['email_'] = email
             session['usrn_'] = usrn
@@ -51,8 +52,9 @@ def signup():
 def verify():
     if request.method == 'POST':
         user_otp = request.form['otp']
+        # if otp sent to email matches the one user inputs sign user up to the database
         if int(user_otp) == session.get('otp_', None):
-            # create new user, store password with a hash for security reasons
+            # create new user, store password with a hash for security reasons, data got through sessions to parse data from /signup route
             new_user = User(email=session.get('email_', None), username=session.get('usrn_', None), password=generate_password_hash(session.get('psw_', None), method='sha256'))
             db.session.add(new_user)
             db.session.commit()
@@ -60,9 +62,9 @@ def verify():
             # log in user module, remember user
             login_user(new_user, remember=True)
             return redirect(url_for('views.chat'))
+        # if otp incorrect flash message
         else:
             flash('the code you entered was not right', category='error')
-
     return render_template('verify.html')
 
 
