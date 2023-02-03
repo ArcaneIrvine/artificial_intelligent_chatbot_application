@@ -91,7 +91,7 @@ net = tflearn.fully_connected(net, len(output[0]), activation="softmax")
 net = tflearn.regression(net)
 model = tflearn.DNN(net)
 
-# fit and train the model
+# fit and train the model * on linux machines the path must be changed from \ to /
 model.load(os.path.dirname(os.path.abspath(__file__)) + "\model\model.tflearn")
 
 # if you change or add additional data for training run the following:
