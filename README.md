@@ -14,6 +14,7 @@ Alternative you can pip them one by one from the list below
 - sqlalchemy
 - flask_sqlalchemy
 - flask_login
+- flask_mail
 
 ### Pages <br />
 ![signup](https://user-images.githubusercontent.com/75722160/218892670-d2f136e7-af9a-4d2d-8921-76cd87c4b3e8.png)
