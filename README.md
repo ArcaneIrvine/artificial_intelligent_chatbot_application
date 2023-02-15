@@ -2,7 +2,7 @@
 This is a personal project made in python. Project's goal is creating an artificial intelligent bot trained on data i will be giving it able to communicate with the user on a webpage after the user creates an account. This project will enchance my AI, Neural Network, Natural Language Processing, Web applications and Databases skills.
 
 ### Chat Bot
-To create the chatbot i first created a yaml file where i wrote down bot's data. For the training part i used one hot encoding and a Neural Network system with 2 layers of 8 neurons using Tensorflow Deep Learning library. Trained the model on 1000 epochs and saved it.
+To create the chatbot i first created a yaml file where i wrote down bot's data. I preprocessed the data by stemming it and saving down each needed data on lists such as words, labels etc. For the training part i used one hot encoding and a Neural Network system with 2 layers of 8 neurons using Tensorflow Deep Learning library. Trained the model on 1000 epochs and saved it after testing its accuracy and loss.
 
 ### Web Page
 For the front end development i used Bootstrap and ready templates that i touched and changed to make it look better. For the back end development i used Flask and sqlalchemy for the Database. User has to fill the signup form correctly, appropriate flash errors will be thrown in case user makes mistakes. Then an OTP code is sent to the users email using flask_mail, if OTP is typed correctly then the user gets saved in the database along with his password encrypted for safety reasons. Once logged in now the user is able to start chatting with the Bot which is loaded into the website. User also has the ability to log out or delete their account which will delete their data from the Database.
