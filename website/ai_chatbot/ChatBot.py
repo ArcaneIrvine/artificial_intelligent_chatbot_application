@@ -79,7 +79,7 @@ except:
     with open(os.path.dirname(os.path.abspath(__file__)) + "data/data.pickle", "wb") as f:
         pickle.dump((words, labels, training, output), f)
 
-# Neuron Network
+# Neural Network
 ops.reset_default_graph()
 # input data in length of training data
 net = tflearn.input_data(shape=[None, len(training[0])])
